@@ -19,11 +19,11 @@ import numpy as np
 
 ######################### INPUTS #############################
 #cm
-Biota = ['Pike','Bullhead','Clam','Mollusc']
+Biota = ['Pike','Pumpkinseed','Egg']
 
-axis1=[30, 12.5, 10, 4]
-axis2=[6, 4, 4, 2]
-axis3=[6, 3, 6, 2]
+axis1=[60, 11, 0.1]
+axis2=[7, 3, 0.1]
+axis3=[9, 5, 0.1]
 
 BiotaDensity = np.array([0.001,0.001,0.001,0.001])#kg/cm3
 BiotaVolume = []  #cm3
@@ -53,9 +53,9 @@ C =[0.0147,0.071]
 
 nuclide = ['H3','Sr90', 'Y90']
 #Phi0 for each nuclide and each biota (pike, bullhead, clam, mollusc)
-Phi0H3 = [1, 1, 1, 1] #0.00568 MeV
-Phi0Sr90 = [9.91E-01, 9.90E-01, 9.91E-01, 9.71E-01] # 0.0546 MeV
-Phi0Y90 = [9.44E-01, 8.81E-01, 9.44E-01, 7.51E-01] # 2.28 MeV interpolated from the given energies
+Phi0H3 = [1, 1, 1] #0.00568 MeV
+Phi0Sr90 = [1, 9.90E-01, 7.28E-01] # 0.0546 MeV
+Phi0Y90 = [9.73E-01, 8.81E-01, 9.90E-02] # 2.28 MeV interpolated from the given energies
 
 for i in range(len(Biota)):
     print(str(Biota[i]))
@@ -110,12 +110,12 @@ for i in range(len(Biota)):
         if nuclide[n] == 'Sr90':
             radtype = 'electron'
             energy = 0.1958 #MeV
-            CSDArange = 0.0455#[g/cm^2] CSDA or cm in water
+            CSDArange = 0.0455 #[g/cm^2] CSDA or cm in water
             Phi0=Phi0Sr90[i]
             
         if nuclide[n] == 'Y90':
             radtype = 'electron'
-            energy = 0.9336 #MeV
+            energy = 0.9936 #MeV
             CSDArange =0.408 #[g/cm^2] CSDA or cm in water
             Phi0=Phi0Y90[i]
         
@@ -138,6 +138,7 @@ for i in range(len(Biota)):
         #combination of the effects of the body mass and the source particle energy.
         #This parameter is defined as the radius of the equal-mass sphere scaled
         r0=R0/energydep_range
+        #print(r0)
         #parameter s for the re-scaling factor
         s= C[r]+(a[r]/(1+math.pow((r0/x0[r]),b[r])))+(c[r]/(d[r]+math.pow(sigmoid(r0/x1[r]),2)))
 
